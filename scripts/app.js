@@ -133,21 +133,37 @@ function displayToolbar() {
         redrawCanvas();
     });
 
-	// const generateCodeButton = document.createElement('button');
-	// generateCodeButton.textContent = "Generate Code";
-	// generateCodeButtonButton.addEventListener('click', () => {
-    //     // Créer un nouveau bloc
-	// 	if (selectedBlock != null) {
-	// 		blocks.pop(selectedBlock);
-	// 		selectedBlock = null;
-	// 		displayBlockDetails();
-	// 	}
+	const generateCodeButton = document.createElement('button');
+	generateCodeButton.textContent = "Generate Code";
+	generateCodeButton.addEventListener('click', () => {
+		if (!selectedBlock)
+			return;
+		const newWindow = window.open(
+			'',
+			'secondaryWindow', // Nom de la fenêtre (utilisé pour éviter d'ouvrir plusieurs fenêtres identiques)
+			'width=600,height=400,scrollbars=yes,resizable=yes' // Options de la fenêtre
+		);
+	
+		// Vérifie si la fenêtre a bien été ouverte
+		if (newWindow) {
+			newWindow.document.title = "Fenêtre secondaire";
+			newWindow.document.body.innerHTML = classBasicTemplate(selectedBlock);
+		} else {
+			alert("La fenêtre pop-up a été bloquée par votre navigateur !");
+		}
 
-    //     redrawCanvas();
-    // });
+		if (selectedBlock != null) {
+			blocks.pop(selectedBlock);
+			selectedBlock = null;
+			displayBlockDetails();
+		}
+
+        redrawCanvas();
+    });
 
     toolbarDiv.appendChild(createBlockButton);
     toolbarDiv.appendChild(deleteBlockButton);
+    toolbarDiv.appendChild(generateCodeButton);
 
 }
 
@@ -360,6 +376,10 @@ function redrawCanvas() {
     }
 }
 
+function generateCodeFromBlock(umlBlock) {
+
+}
+
 
 //Event Listeners :
 
@@ -419,4 +439,17 @@ canvas.addEventListener("click", (event) => {
     }
 });
 
+
+//template functions
+function classBasicTemplate(umlBlock) {
+	let text = `
+class ${umlBlock.name} {
+public:
+    ${umlBlock.name}();
+    ~${umlBlock.name}();
+};
+`;
+
+	return text;
+}
 
