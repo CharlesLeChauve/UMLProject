@@ -27,16 +27,20 @@ main {
     width: 100%;
     height: 100%;
     /* Pour s'assurer que le canvas ne déborde pas de son conteneur */
-    display: block;
+    /* display: block; */
 }
 
 #visualization {
-	height: 80vh;
+	height: 90vh;
 	width: 65vw;
 }
 
 #editor {
 	width: 35vw;
+}
+
+#toolbar {
+    margin-bottom: 20px; /* Ajustez la valeur selon vos besoins */
 }
 
 #editor, #visualization {
